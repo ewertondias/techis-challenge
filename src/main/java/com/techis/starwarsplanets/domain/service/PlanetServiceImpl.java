@@ -3,11 +3,11 @@ package com.techis.starwarsplanets.domain.service;
 import com.techis.starwarsplanets.domain.Planet;
 import com.techis.starwarsplanets.domain.exception.BusinessException;
 import com.techis.starwarsplanets.domain.repository.PlanetServiceRepository;
-import org.hibernate.validator.internal.engine.ValidatorImpl;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.util.List;
 import java.util.Set;
 
 public class PlanetServiceImpl implements PlanetService {
@@ -33,6 +33,31 @@ public class PlanetServiceImpl implements PlanetService {
 
         assertRequestIsValid(planet);
         return planetServiceRepository.insert(planet);
+    }
+
+    @Override
+    public List<Planet> listDatabase() {
+        return planetServiceRepository.listDatabase();
+    }
+
+    @Override
+    public List<Planet> listApi() {
+        return planetServiceRepository.listApi();
+    }
+
+    @Override
+    public Planet findByName(final String name) {
+        return planetServiceRepository.findByName(name);
+    }
+
+    @Override
+    public Planet findById(final Long id) {
+        return planetServiceRepository.findById(id);
+    }
+
+    @Override
+    public void remove(final Long id) {
+        planetServiceRepository.remove(id);
     }
 
 }
