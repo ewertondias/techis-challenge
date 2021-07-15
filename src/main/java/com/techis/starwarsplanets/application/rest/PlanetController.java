@@ -4,6 +4,7 @@ import com.techis.starwarsplanets.application.assembler.PlanetAssembler;
 import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.model.request.PlanetRequest;
 import com.techis.starwarsplanets.domain.service.PlanetService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,8 +42,8 @@ public class PlanetController {
     }
 
     @GetMapping("/api")
-    public List<Planet> listApi() {
-        return planetService.listApi();
+    public List<Planet> listApi(final Pageable pageable) {
+        return planetService.listApi(pageable);
     }
 
     @GetMapping

@@ -1,6 +1,7 @@
 package com.techis.starwarsplanets.domain.repository;
 
 import com.techis.starwarsplanets.domain.model.Planet;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,7 @@ public interface PlanetRepository {
 
     List<Planet> listDatabase();
 
-    List<Planet> listApi();
+    List<Planet> listApi(final Pageable pageable);
 
     List<Planet> findByName(final String name);
 

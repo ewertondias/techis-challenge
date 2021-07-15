@@ -3,6 +3,7 @@ package com.techis.starwarsplanets.domain.service;
 import com.techis.starwarsplanets.domain.exception.BusinessException;
 import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.repository.PlanetRepository;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -41,8 +42,8 @@ public class PlanetServiceImpl implements PlanetService {
     }
 
     @Override
-    public List<Planet> listApi() {
-        return planetRepository.listApi();
+    public List<Planet> listApi(final Pageable pageable) {
+        return planetRepository.listApi(pageable);
     }
 
     @Override

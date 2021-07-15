@@ -2,6 +2,7 @@ package com.techis.starwarsplanets.infrastructure.assembler;
 
 import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.infrastructure.repository.PlanetEntity;
+import com.techis.starwarsplanets.infrastructure.repository.PlanetResponseResultApi;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,12 @@ public class PlanetEntityAssembler {
 
     public PlanetEntity toEntity(final Planet planet) {
         return modelMapper.map(planet, PlanetEntity.class);
+    }
+
+    public List<Planet> responseApiToCollectionModel(final List<PlanetResponseResultApi> planetResponseApi) {
+        return planetResponseApi.stream()
+            .map(planetApi -> modelMapper.map(planetApi, Planet.class))
+            .collect(Collectors.toList());
     }
 
 }
