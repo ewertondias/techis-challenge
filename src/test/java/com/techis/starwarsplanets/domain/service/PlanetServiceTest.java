@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -98,26 +99,29 @@ class PlanetServiceTest {
     }
 
     @Test
-    void dadoUmNome_deveRetornarUmPlaneta() {
+    void dadoUmNome_deveRetornarUmOuMaisPlanetas() {
         final String planetNameSearch = "Dagobah";
 
-        final Planet planetMock = Planet.builder()
-            .name("Dagobah")
-            .climate("Murky")
-            .terrain("Swamp")
-            .movieAppearances(3)
-            .build();
+        final List<Planet> planetsMock = Collections.singletonList(
+            Planet.builder()
+                .name("Dagobah")
+                .climate("Murky")
+                .terrain("Swamp")
+                .movieAppearances(3)
+                .build()
+        );
 
-        when(planetRepositoryMock.findByName(anyString())).thenReturn(planetMock);
+        when(planetRepositoryMock.findByName(anyString())).thenReturn(planetsMock);
 
-        final Planet planet = planetService.findByName(planetNameSearch);
+        final List<Planet> planets = planetService.findByName(planetNameSearch);
 
-        assertNotNull(planet);
+        assertFalse(planets.isEmpty());
+        assertThat(planets.size(), Matchers.greaterThanOrEqualTo(1));
     }
 
     @Test
     void dadoUmId_deveRetornarUmPlaneta() {
-        final Long planetIdSearch = 1L;
+        final String planetIdSearch = "60efadad6023686be98177d8";
 
         final Planet planetMock = Planet.builder()
             .name("Dagobah")
@@ -126,18 +130,20 @@ class PlanetServiceTest {
             .movieAppearances(3)
             .build();
 
-        when(planetRepositoryMock.findById(anyLong())).thenReturn(planetMock);
+        when(planetRepositoryMock.findById(anyString())).thenReturn(Optional.of(planetMock));
 
         final Planet planet = planetService.findById(planetIdSearch);
 
         assertNotNull(planet);
     }
 
+    // TODO Criar teste de erro quando id do planeta nao existir
+
     @Test
     void deveRemoverUmPlaneta() {
-        final Long id = 1L;
+        final String id = "60efadad6023686be98177d8";
 
-        doNothing().when(planetRepositoryMock).remove(anyLong());
+        doNothing().when(planetRepositoryMock).remove(anyString());
 
         planetService.remove(id);
 

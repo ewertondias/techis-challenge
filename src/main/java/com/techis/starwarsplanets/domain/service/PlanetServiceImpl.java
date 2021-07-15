@@ -28,7 +28,7 @@ public class PlanetServiceImpl implements PlanetService {
 
     @Override
     public Planet insert(final Planet planet) {
-        // TODO: Obter a quantidade de participacoes nos filmes pela API
+        // TODO Obter a quantidade de participacoes nos filmes pela API
         planet.setMovieAppearances(3);
 
         assertRequestIsValid(planet);
@@ -46,17 +46,19 @@ public class PlanetServiceImpl implements PlanetService {
     }
 
     @Override
-    public Planet findByName(final String name) {
+    public List<Planet> findByName(final String name) {
         return planetRepository.findByName(name);
     }
 
     @Override
-    public Planet findById(final Long id) {
-        return planetRepository.findById(id);
+    public Planet findById(final String id) {
+        // TODO Criar exception generica e ajustar mensagem
+        return planetRepository.findById(id)
+            .orElseThrow(() -> new BusinessException("Planeta com id 1 não encontrado"));
     }
 
     @Override
-    public void remove(final Long id) {
+    public void remove(final String id) {
         planetRepository.remove(id);
     }
 

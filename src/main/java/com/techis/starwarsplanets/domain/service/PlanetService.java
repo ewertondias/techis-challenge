@@ -12,10 +12,10 @@ public interface PlanetService {
 
     List<Planet> listApi();
 
-    Planet findByName(final String name);
+    List<Planet> findByName(final String name);
 
-    Planet findById(final Long id);
+    Planet findById(final String id);
 
-    void remove(final Long id);
+    void remove(final String id);
 
 }

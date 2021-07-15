@@ -3,6 +3,7 @@ package com.techis.starwarsplanets.domain.repository;
 import com.techis.starwarsplanets.domain.model.Planet;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PlanetRepository {
 
@@ -13,11 +14,10 @@ public interface PlanetRepository {
 
     List<Planet> listApi();
 
-    // TODO verificar Optional
-    Planet findByName(final String name);
+    List<Planet> findByName(final String name);
 
-    Planet findById(final Long id);
+    Optional<Planet> findById(final String id);
 
-    void remove(final Long id);
+    void remove(final String id);
 
 }

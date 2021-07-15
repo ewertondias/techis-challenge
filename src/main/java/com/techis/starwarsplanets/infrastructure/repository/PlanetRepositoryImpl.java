@@ -6,6 +6,7 @@ import com.techis.starwarsplanets.infrastructure.assembler.PlanetEntityAssembler
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PlanetRepositoryImpl implements PlanetRepository {
@@ -30,8 +31,9 @@ public class PlanetRepositoryImpl implements PlanetRepository {
 
     @Override
     public List<Planet> listDatabase() {
-        // TODO Implement
-        return null;
+        var planetEntities = planetMongoRepository.findAll();
+
+        return planetEntityAssembler.toCollectionModel(planetEntities);
     }
 
     @Override
@@ -41,20 +43,22 @@ public class PlanetRepositoryImpl implements PlanetRepository {
     }
 
     @Override
-    public Planet findByName(String name) {
-        // TODO Implement
-        return null;
+    public List<Planet> findByName(final String name) {
+        final var planetEntities = planetMongoRepository.findByName(name);
+
+        return planetEntityAssembler.toCollectionModel(planetEntities);
     }
 
     @Override
-    public Planet findById(Long id) {
-        // TODO Implement
-        return null;
+    public Optional<Planet> findById(final String id) {
+        return planetMongoRepository.findById(id)
+            .map(planetEntityAssembler::toModel);
     }
 
     @Override
-    public void remove(Long id) {
-        // TODO Implement
+    public void remove(final String id) {
+        // TODO Verificar se existe
+        planetMongoRepository.deleteById(id);
     }
 
 }
