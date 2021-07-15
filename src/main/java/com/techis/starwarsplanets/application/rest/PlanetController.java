@@ -1,6 +1,7 @@
 package com.techis.starwarsplanets.application.rest;
 
 import com.techis.starwarsplanets.application.assembler.PlanetAssembler;
+import com.techis.starwarsplanets.application.helper.ResourceUriHelper;
 import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.model.request.PlanetRequest;
 import com.techis.starwarsplanets.domain.service.PlanetService;
@@ -33,10 +34,14 @@ public class PlanetController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Planet insert(@RequestBody @Valid PlanetRequest request) {
-        Planet planet = planetAssembler.toModel(request);
+    public Planet insert(@RequestBody @Valid PlanetRequest planetRequest) {
+        var planet = planetAssembler.toModel(planetRequest);
 
-        return planetService.insert(planet);
+        planet = planetService.insert(planet);
+
+        ResourceUriHelper.addUriResponseHeader(planet.getId());
+
+        return planet;
     }
 
     @GetMapping("/database")

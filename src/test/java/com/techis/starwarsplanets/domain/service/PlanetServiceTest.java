@@ -93,7 +93,6 @@ class PlanetServiceTest {
 
         when(planetRepositoryMock.listApi(any())).thenReturn(planetsMock);
 
-        // TODO ajustar pageable
         final List<Planet> planets = planetService.listApi(null);
 
         assertFalse(planets.isEmpty());

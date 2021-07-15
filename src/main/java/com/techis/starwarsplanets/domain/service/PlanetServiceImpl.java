@@ -30,8 +30,9 @@ public class PlanetServiceImpl implements PlanetService {
 
     @Override
     public Planet insert(final Planet planet) {
-        // TODO Obter a quantidade de participacoes nos filmes pela API
-        planet.setMovieAppearances(3);
+        // TODO nao deixar cadastrar planeta com nome existente
+        final var movieAppareances = findMovieAppearances(planet);
+        planet.setMovieAppearances(movieAppareances);
 
         assertRequestIsValid(planet);
         return planetRepository.insert(planet);
@@ -39,6 +40,7 @@ public class PlanetServiceImpl implements PlanetService {
 
     @Override
     public List<Planet> listDatabase() {
+        // Retornar apenas 1
         return planetRepository.listDatabase();
     }
 
@@ -67,4 +69,8 @@ public class PlanetServiceImpl implements PlanetService {
         planetRepository.remove(id);
     }
 
+    @Override
+    public Integer findMovieAppearances(final Planet planet) {
+        return planetRepository.findMovieAppearances(planet);
+    }
 }

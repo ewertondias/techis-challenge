@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface PlanetRepository {
 
-    // TODO verificar Optional
     Planet insert(final Planet planet);
 
     List<Planet> listDatabase();
@@ -20,5 +19,7 @@ public interface PlanetRepository {
     Optional<Planet> findById(final String id);
 
     void remove(final String id);
+
+    Integer findMovieAppearances(final Planet planet);
 
 }

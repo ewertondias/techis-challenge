@@ -19,4 +19,6 @@ public interface PlanetService {
 
     void remove(final String id);
 
+    Integer findMovieAppearances(final Planet planet);
+
 }

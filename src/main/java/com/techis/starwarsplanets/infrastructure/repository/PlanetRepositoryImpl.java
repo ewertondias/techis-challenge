@@ -1,5 +1,6 @@
 package com.techis.starwarsplanets.infrastructure.repository;
 
+import com.techis.starwarsplanets.domain.exception.PlanetNotFoundExceptionException;
 import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.repository.PlanetRepository;
 import com.techis.starwarsplanets.infrastructure.assembler.PlanetEntityAssembler;
@@ -17,12 +18,36 @@ public class PlanetRepositoryImpl implements PlanetRepository {
     private final PlanetMongoRepository planetMongoRepository;
     private final PlanetEntityAssembler planetEntityAssembler;
     private final RestTemplate restTemplate = new RestTemplate();
+
+    // TODO Colocar no property
     private static final String API_PATH_PLANETS = "https://swapi.dev/api/planets";
 
     public PlanetRepositoryImpl(final PlanetMongoRepository planetMongoRepository,
                                 final PlanetEntityAssembler planetEntityAssembler) {
         this.planetMongoRepository = planetMongoRepository;
         this.planetEntityAssembler = planetEntityAssembler;
+    }
+
+    private PlanetResponseResultApi findPlanetApi(final Planet planet) {
+        final String resourceUrl = API_PATH_PLANETS + "/?search=" + planet.getName();
+
+        try {
+            ResponseEntity<PlanetResponseApi> response = restTemplate.getForEntity(resourceUrl, PlanetResponseApi.class);
+
+            final var planetApi = response.getBody().getResults().get(0);
+
+            if (!planet.getName().equalsIgnoreCase(planetApi.getName())) {
+                throw new PlanetNotFoundExceptionException(
+                    String.format("O planeta com o nome %s não foi encontrado na api", planet.getName())
+                );
+            }
+
+            return planetApi;
+        } catch (Exception e) {
+            throw new PlanetNotFoundExceptionException(
+                String.format("O planeta com o nome %s não foi encontrado na api", planet.getName())
+            );
+        }
     }
 
     @Override
@@ -52,7 +77,6 @@ public class PlanetRepositoryImpl implements PlanetRepository {
 
         ResponseEntity<PlanetResponseApi> response = restTemplate.getForEntity(resourceUrl, PlanetResponseApi.class);
 
-        // TODO adicionar try catch
         return planetEntityAssembler.responseApiToCollectionModel(response.getBody().getResults());
     }
 
@@ -74,4 +98,10 @@ public class PlanetRepositoryImpl implements PlanetRepository {
         planetMongoRepository.deleteById(id);
     }
 
+    @Override
+    public Integer findMovieAppearances(final Planet planet) {
+        final var planetApi = findPlanetApi(planet);
+
+        return planetApi.getFilms().size();
+    }
 }
