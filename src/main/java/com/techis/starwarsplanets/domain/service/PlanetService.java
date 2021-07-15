@@ -1,6 +1,6 @@
 package com.techis.starwarsplanets.domain.service;
 
-import com.techis.starwarsplanets.domain.Planet;
+import com.techis.starwarsplanets.domain.model.Planet;
 
 import java.util.List;
 

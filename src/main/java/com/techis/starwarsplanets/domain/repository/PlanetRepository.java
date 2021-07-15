@@ -1,10 +1,10 @@
 package com.techis.starwarsplanets.domain.repository;
 
-import com.techis.starwarsplanets.domain.Planet;
+import com.techis.starwarsplanets.domain.model.Planet;
 
 import java.util.List;
 
-public interface PlanetServiceRepository {
+public interface PlanetRepository {
 
     // TODO verificar Optional
     Planet insert(final Planet planet);

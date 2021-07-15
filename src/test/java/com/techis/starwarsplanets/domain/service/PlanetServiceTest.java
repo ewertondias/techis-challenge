@@ -1,8 +1,8 @@
 package com.techis.starwarsplanets.domain.service;
 
-import com.techis.starwarsplanets.domain.Planet;
+import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.exception.BusinessException;
-import com.techis.starwarsplanets.domain.repository.PlanetServiceRepository;
+import com.techis.starwarsplanets.domain.repository.PlanetRepository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,23 +27,23 @@ import static org.mockito.Mockito.when;
 class PlanetServiceTest {
 
     private static PlanetService planetService;
-    private static PlanetServiceRepository planetServiceRepositoryMock;
+    private static PlanetRepository planetRepositoryMock;
 
     @BeforeAll
     static void beforeAll() {
-        planetServiceRepositoryMock = Mockito.mock(PlanetServiceRepository.class);
-        planetService = new PlanetServiceImpl(planetServiceRepositoryMock);
+        planetRepositoryMock = Mockito.mock(PlanetRepository.class);
+        planetService = new PlanetServiceImpl(planetRepositoryMock);
     }
 
     @Test
-    void deveCadastrarUmPlanetaComSucesso() {
+    void deveCadastrarUmPlaneta() {
         final Planet planetRequest = Planet.builder()
             .name("Dagobah")
             .climate("Murky")
             .terrain("Swamp")
             .build();
 
-        when(planetServiceRepositoryMock.insert(Mockito.any())).thenReturn(planetRequest);
+        when(planetRepositoryMock.insert(Mockito.any())).thenReturn(planetRequest);
         final Planet planet = planetService.insert(planetRequest);
 
         Assertions.assertNotNull(planet);
@@ -60,7 +61,7 @@ class PlanetServiceTest {
 
     @Test
     void deveRetornarUmaListaDePlanetasDoBancoDeDados() {
-        final List<Planet> planetsMock = Arrays.asList(
+        final List<Planet> planetsMock = Collections.singletonList(
             Planet.builder()
                 .name("Dagobah")
                 .climate("Murky")
@@ -69,7 +70,7 @@ class PlanetServiceTest {
                 .build()
         );
 
-        when(planetServiceRepositoryMock.listDatabase()).thenReturn(planetsMock);
+        when(planetRepositoryMock.listDatabase()).thenReturn(planetsMock);
 
         final List<Planet> planets = planetService.listDatabase();
 
@@ -79,7 +80,7 @@ class PlanetServiceTest {
 
     @Test
     void deveRetornarUmaListaDePlanetasDaApi() {
-        final List<Planet> planetsMock = Arrays.asList(
+        final List<Planet> planetsMock = Collections.singletonList(
             Planet.builder()
                 .name("Dagobah")
                 .climate("Murky")
@@ -88,7 +89,7 @@ class PlanetServiceTest {
                 .build()
         );
 
-        when(planetServiceRepositoryMock.listApi()).thenReturn(planetsMock);
+        when(planetRepositoryMock.listApi()).thenReturn(planetsMock);
 
         final List<Planet> planets = planetService.listApi();
 
@@ -107,7 +108,7 @@ class PlanetServiceTest {
             .movieAppearances(3)
             .build();
 
-        when(planetServiceRepositoryMock.findByName(anyString())).thenReturn(planetMock);
+        when(planetRepositoryMock.findByName(anyString())).thenReturn(planetMock);
 
         final Planet planet = planetService.findByName(planetNameSearch);
 
@@ -125,7 +126,7 @@ class PlanetServiceTest {
             .movieAppearances(3)
             .build();
 
-        when(planetServiceRepositoryMock.findById(anyLong())).thenReturn(planetMock);
+        when(planetRepositoryMock.findById(anyLong())).thenReturn(planetMock);
 
         final Planet planet = planetService.findById(planetIdSearch);
 
@@ -136,11 +137,11 @@ class PlanetServiceTest {
     void deveRemoverUmPlaneta() {
         final Long id = 1L;
 
-        doNothing().when(planetServiceRepositoryMock).remove(anyLong());
+        doNothing().when(planetRepositoryMock).remove(anyLong());
 
         planetService.remove(id);
 
-        verify(planetServiceRepositoryMock, times(1)).remove(id);
+        verify(planetRepositoryMock, times(1)).remove(id);
     }
 
 }

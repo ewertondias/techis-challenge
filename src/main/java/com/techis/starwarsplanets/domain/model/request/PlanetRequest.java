@@ -1,15 +1,15 @@
-package com.techis.starwarsplanets.domain;
+package com.techis.starwarsplanets.domain.model.request;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
 @Builder
+@Getter
 @Setter
-public class Planet {
-
-    private Long id;
+public class PlanetRequest {
 
     @NotNull
     private String name;
@@ -19,8 +19,5 @@ public class Planet {
 
     @NotNull
     private String terrain;
-
-    @NotNull
-    private Integer movieAppearances;
 
 }

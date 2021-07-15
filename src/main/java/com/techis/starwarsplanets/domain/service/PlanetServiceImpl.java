@@ -1,8 +1,8 @@
 package com.techis.starwarsplanets.domain.service;
 
-import com.techis.starwarsplanets.domain.Planet;
 import com.techis.starwarsplanets.domain.exception.BusinessException;
-import com.techis.starwarsplanets.domain.repository.PlanetServiceRepository;
+import com.techis.starwarsplanets.domain.model.Planet;
+import com.techis.starwarsplanets.domain.repository.PlanetRepository;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -12,11 +12,11 @@ import java.util.Set;
 
 public class PlanetServiceImpl implements PlanetService {
 
-    private final PlanetServiceRepository planetServiceRepository;
+    private final PlanetRepository planetRepository;
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    public PlanetServiceImpl(final PlanetServiceRepository planetServiceRepository) {
-        this.planetServiceRepository = planetServiceRepository;
+    public PlanetServiceImpl(final PlanetRepository planetRepository) {
+        this.planetRepository = planetRepository;
     }
 
     private void assertRequestIsValid(final Planet planet) {
@@ -32,32 +32,32 @@ public class PlanetServiceImpl implements PlanetService {
         planet.setMovieAppearances(3);
 
         assertRequestIsValid(planet);
-        return planetServiceRepository.insert(planet);
+        return planetRepository.insert(planet);
     }
 
     @Override
     public List<Planet> listDatabase() {
-        return planetServiceRepository.listDatabase();
+        return planetRepository.listDatabase();
     }
 
     @Override
     public List<Planet> listApi() {
-        return planetServiceRepository.listApi();
+        return planetRepository.listApi();
     }
 
     @Override
     public Planet findByName(final String name) {
-        return planetServiceRepository.findByName(name);
+        return planetRepository.findByName(name);
     }
 
     @Override
     public Planet findById(final Long id) {
-        return planetServiceRepository.findById(id);
+        return planetRepository.findById(id);
     }
 
     @Override
     public void remove(final Long id) {
-        planetServiceRepository.remove(id);
+        planetRepository.remove(id);
     }
 
 }

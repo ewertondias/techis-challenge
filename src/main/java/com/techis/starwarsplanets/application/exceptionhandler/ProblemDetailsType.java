@@ -1,4 +1,4 @@
-package com.techis.starwarsplanets.application;
+package com.techis.starwarsplanets.application.exceptionhandler;
 
 import lombok.Getter;
 
@@ -14,4 +14,5 @@ public enum ProblemDetailsType {
         this.uri = "https://techis.com" + path;
         this.title = title;
     }
+
 }

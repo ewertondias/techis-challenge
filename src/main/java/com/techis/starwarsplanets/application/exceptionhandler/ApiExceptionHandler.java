@@ -1,4 +1,4 @@
-package com.techis.starwarsplanets.application;
+package com.techis.starwarsplanets.application.exceptionhandler;
 
 import com.techis.starwarsplanets.domain.exception.BusinessException;
 import org.springframework.http.HttpHeaders;
