@@ -71,7 +71,6 @@ public class PlanetRepositoryImpl implements PlanetRepository {
 
     @Override
     public void remove(final String id) {
-        // TODO Verificar se existe
         planetMongoRepository.deleteById(id);
     }
 

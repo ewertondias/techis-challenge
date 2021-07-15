@@ -62,6 +62,8 @@ public class PlanetServiceImpl implements PlanetService {
 
     @Override
     public void remove(final String id) {
+        findById(id);
+
         planetRepository.remove(id);
     }
 
