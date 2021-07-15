@@ -1,4 +1,4 @@
-package com.techis.starwarsplanets.infrastructure.configuration;
+package com.techis.starwarsplanets.infrastructure.configuration.modelmapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

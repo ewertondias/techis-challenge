@@ -1,4 +1,4 @@
-package com.techis.starwarsplanets.infrastructure.configuration;
+package com.techis.starwarsplanets.infrastructure.configuration.mongodb;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

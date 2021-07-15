@@ -1,4 +1,4 @@
-package com.techis.starwarsplanets.infrastructure.configuration;
+package com.techis.starwarsplanets.infrastructure.configuration.bean;
 
 import com.techis.starwarsplanets.StarwarsPlanetsApplication;
 import com.techis.starwarsplanets.domain.repository.PlanetRepository;
