@@ -4,3 +4,5 @@ spring:
       host: localhost
       port: 27017
       database: starwars-planets
+      username: techis
+      password: techis

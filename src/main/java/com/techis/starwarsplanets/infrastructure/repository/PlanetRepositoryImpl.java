@@ -94,7 +94,7 @@ public class PlanetRepositoryImpl implements PlanetRepository {
     }
 
     @Override
-    public void remove(final String id) {
+    public void delete(final String id) {
         planetMongoRepository.deleteById(id);
     }
 

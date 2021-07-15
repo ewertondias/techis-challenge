@@ -66,8 +66,8 @@ public class PlanetController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remove(@PathVariable final String id) {
-        planetService.remove(id);
+    public void delete(@PathVariable final String id) {
+        planetService.delete(id);
     }
 
 }

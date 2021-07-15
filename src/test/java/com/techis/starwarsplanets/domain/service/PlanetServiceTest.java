@@ -1,7 +1,7 @@
 package com.techis.starwarsplanets.domain.service;
 
-import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.exception.BusinessException;
+import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.repository.PlanetRepository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -138,17 +136,15 @@ class PlanetServiceTest {
         assertNotNull(planet);
     }
 
-    // TODO Criar teste de erro quando id do planeta nao existir
-
     @Test
     void deveRemoverUmPlaneta() {
         final String id = "60efadad6023686be98177d8";
 
-        doNothing().when(planetRepositoryMock).remove(anyString());
+        doNothing().when(planetRepositoryMock).delete(anyString());
 
-        planetService.remove(id);
+        planetService.delete(id);
 
-        verify(planetRepositoryMock, times(1)).remove(id);
+        verify(planetRepositoryMock, times(1)).delete(id);
     }
 
 }
