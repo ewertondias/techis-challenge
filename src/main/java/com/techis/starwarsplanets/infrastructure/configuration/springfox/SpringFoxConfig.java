@@ -25,6 +25,8 @@ public class SpringFoxConfig {
     public ApiInfo apiInfo() {
         return new ApiInfoBuilder()
             .title("Star Wars Planets API")
+            .description("API de planetas Star Wars")
+            .version("1")
             .build();
     }
 

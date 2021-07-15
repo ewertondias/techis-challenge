@@ -1,6 +1,7 @@
 package com.techis.starwarsplanets.domain.service;
 
 import com.techis.starwarsplanets.domain.exception.BusinessException;
+import com.techis.starwarsplanets.domain.exception.PlanetNotFoundExceptionException;
 import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.repository.PlanetRepository;
 import org.springframework.data.domain.Pageable;
@@ -53,9 +54,10 @@ public class PlanetServiceImpl implements PlanetService {
 
     @Override
     public Planet findById(final String id) {
-        // TODO Criar exception generica e ajustar mensagem
         return planetRepository.findById(id)
-            .orElseThrow(() -> new BusinessException("Planeta com id 1 não encontrado"));
+            .orElseThrow(() -> new PlanetNotFoundExceptionException(
+                String.format("O planeta com o id %s não foi encontrado", id)
+            ));
     }
 
     @Override

@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum ProblemDetailsType {
 
-    BUSINESS_ERROR("/business-error", "Violação de regra de negócio");
+    BUSINESS_ERROR("/business-error", "Violação de regra de negócio"),
+    RESOURCE_NOT_FOUND("/resource-not-found", "Recurso não encontrado");
 
     private final String uri;
     private final String title;

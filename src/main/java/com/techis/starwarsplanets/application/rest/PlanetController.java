@@ -5,6 +5,7 @@ import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.model.request.PlanetRequest;
 import com.techis.starwarsplanets.domain.service.PlanetService;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -30,6 +32,7 @@ public class PlanetController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Planet insert(@RequestBody @Valid PlanetRequest request) {
         Planet planet = planetAssembler.toModel(request);
 
@@ -57,6 +60,7 @@ public class PlanetController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remove(@PathVariable final String id) {
         planetService.remove(id);
     }

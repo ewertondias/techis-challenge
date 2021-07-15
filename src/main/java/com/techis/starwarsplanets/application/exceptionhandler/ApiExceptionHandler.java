@@ -1,6 +1,7 @@
 package com.techis.starwarsplanets.application.exceptionhandler;
 
 import com.techis.starwarsplanets.domain.exception.BusinessException;
+import com.techis.starwarsplanets.domain.exception.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             .build();
 
         return super.handleExceptionInternal(ex, problemDetails, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+        final var problemDetails = ProblemDetails.builder()
+            .status(HttpStatus.NOT_FOUND.value())
+            .type(ProblemDetailsType.RESOURCE_NOT_FOUND.getUri())
+            .title(ProblemDetailsType.RESOURCE_NOT_FOUND.getTitle())
+            .detail(ex.getMessage())
+            .userMessage(ex.getMessage())
+            .build();
+
+        return super.handleExceptionInternal(ex, problemDetails, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
 }
