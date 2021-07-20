@@ -1,6 +1,7 @@
 package com.techis.starwarsplanets.domain.service;
 
 import com.techis.starwarsplanets.domain.exception.BusinessException;
+import com.techis.starwarsplanets.domain.exception.PlanetAlreadyExistsException;
 import com.techis.starwarsplanets.domain.exception.PlanetNotFoundExceptionException;
 import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.repository.PlanetRepository;
@@ -10,6 +11,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class PlanetServiceImpl implements PlanetService {
@@ -30,7 +32,14 @@ public class PlanetServiceImpl implements PlanetService {
 
     @Override
     public Planet insert(final Planet planet) {
-        // TODO nao deixar cadastrar planeta com nome existente
+        final Optional<Planet> planetOptional = planetRepository.findByName(planet.getName());
+
+        if (planetOptional.isPresent()) {
+            throw new PlanetAlreadyExistsException(
+                String.format("O planeta com o nome %s já está cadastrado", planet.getName())
+            );
+        }
+
         final var movieAppareances = findMovieAppearances(planet);
         planet.setMovieAppearances(movieAppareances);
 
@@ -40,7 +49,6 @@ public class PlanetServiceImpl implements PlanetService {
 
     @Override
     public List<Planet> listDatabase() {
-        // Retornar apenas 1
         return planetRepository.listDatabase();
     }
 
@@ -50,8 +58,11 @@ public class PlanetServiceImpl implements PlanetService {
     }
 
     @Override
-    public List<Planet> findByName(final String name) {
-        return planetRepository.findByName(name);
+    public Planet findByName(final String name) {
+        return planetRepository.findByName(name)
+            .orElseThrow(() -> new PlanetNotFoundExceptionException(
+                String.format("O planeta com o nome %s não foi encontrado", name)
+            ));
     }
 
     @Override

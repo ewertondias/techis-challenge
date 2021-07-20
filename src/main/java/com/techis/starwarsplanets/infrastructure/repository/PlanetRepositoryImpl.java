@@ -81,10 +81,18 @@ public class PlanetRepositoryImpl implements PlanetRepository {
     }
 
     @Override
-    public List<Planet> findByName(final String name) {
+    public Optional<Planet> findByName(final String name) {
         final var planetEntities = planetMongoRepository.findByName(name);
 
-        return planetEntityAssembler.toCollectionModel(planetEntities);
+        if (planetEntities.isEmpty()) {
+            throw new PlanetNotFoundExceptionException(
+                String.format("O planeta com o nome %s não foi encontrado", name)
+            );
+        }
+
+        final var planet = planetEntityAssembler.toModel(planetEntities.get(0));
+
+        return Optional.of(planet);
     }
 
     @Override

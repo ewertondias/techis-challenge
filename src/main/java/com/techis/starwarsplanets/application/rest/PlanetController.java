@@ -55,7 +55,7 @@ public class PlanetController {
     }
 
     @GetMapping
-    public List<Planet> findByName(@RequestParam final String name) {
+    public Planet findByName(@RequestParam final String name) {
         return planetService.findByName(name);
     }
 

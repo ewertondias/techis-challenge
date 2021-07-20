@@ -14,7 +14,7 @@ public interface PlanetRepository {
 
     List<Planet> listApi(final Pageable pageable);
 
-    List<Planet> findByName(final String name);
+    Optional<Planet> findByName(final String name);
 
     Optional<Planet> findById(final String id);
 

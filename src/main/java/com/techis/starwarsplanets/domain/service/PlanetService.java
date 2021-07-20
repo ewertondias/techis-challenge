@@ -13,7 +13,7 @@ public interface PlanetService {
 
     List<Planet> listApi(final Pageable pageable);
 
-    List<Planet> findByName(final String name);
+    Planet findByName(final String name);
 
     Planet findById(final String id);
 

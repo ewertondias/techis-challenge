@@ -14,9 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -98,24 +100,22 @@ class PlanetServiceTest {
     }
 
     @Test
-    void dadoUmNome_deveRetornarUmOuMaisPlanetas() {
+    void dadoUmNome_deveRetornarUmPlaneta() {
         final String planetNameSearch = "Dagobah";
 
-        final List<Planet> planetsMock = Collections.singletonList(
-            Planet.builder()
-                .name("Dagobah")
-                .climate("Murky")
-                .terrain("Swamp")
-                .movieAppearances(3)
-                .build()
-        );
+        final Planet planetMock = Planet.builder()
+            .name("Dagobah")
+            .climate("Murky")
+            .terrain("Swamp")
+            .movieAppearances(3)
+            .build();
 
-        when(planetRepositoryMock.findByName(anyString())).thenReturn(planetsMock);
+        when(planetRepositoryMock.findByName(anyString())).thenReturn(Optional.of(planetMock));
 
-        final List<Planet> planets = planetService.findByName(planetNameSearch);
+        final Planet planet = planetService.findByName(planetNameSearch);
 
-        assertFalse(planets.isEmpty());
-        assertThat(planets.size(), Matchers.greaterThanOrEqualTo(1));
+        assertNotNull(planet);
+        assertEquals("Dagobah", planet.getName());
     }
 
     @Test
