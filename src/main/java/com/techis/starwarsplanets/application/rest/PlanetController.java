@@ -2,9 +2,10 @@ package com.techis.starwarsplanets.application.rest;
 
 import com.techis.starwarsplanets.application.assembler.PlanetAssembler;
 import com.techis.starwarsplanets.application.helper.ResourceUriHelper;
+import com.techis.starwarsplanets.application.model.PlanetRequest;
 import com.techis.starwarsplanets.domain.model.Planet;
-import com.techis.starwarsplanets.domain.model.request.PlanetRequest;
 import com.techis.starwarsplanets.domain.service.PlanetService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,8 +46,8 @@ public class PlanetController {
     }
 
     @GetMapping("/database")
-    public List<Planet> listDatabase() {
-        return planetService.listDatabase();
+    public Page<Planet> listDatabase(final Pageable pageable) {
+        return planetService.listDatabase(pageable);
     }
 
     @GetMapping("/api")

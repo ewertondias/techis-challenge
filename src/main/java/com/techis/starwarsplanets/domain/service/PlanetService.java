@@ -1,6 +1,7 @@
 package com.techis.starwarsplanets.domain.service;
 
 import com.techis.starwarsplanets.domain.model.Planet;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface PlanetService {
 
     Planet insert(final Planet planet);
 
-    List<Planet> listDatabase();
+    Page<Planet> listDatabase(final Pageable pageable);
 
     List<Planet> listApi(final Pageable pageable);
 

@@ -4,6 +4,8 @@ import com.techis.starwarsplanets.domain.exception.PlanetNotFoundExceptionExcept
 import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.repository.PlanetRepository;
 import com.techis.starwarsplanets.infrastructure.assembler.PlanetEntityAssembler;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -60,10 +62,12 @@ public class PlanetRepositoryImpl implements PlanetRepository {
     }
 
     @Override
-    public List<Planet> listDatabase() {
-        var planetEntities = planetMongoRepository.findAll();
+    public Page<Planet> listDatabase(final Pageable pageable) {
+        final var planetEntityPage = planetMongoRepository.findAll(pageable);
 
-        return planetEntityAssembler.toCollectionModel(planetEntities);
+        final var planets = planetEntityAssembler.toCollectionModel(planetEntityPage.getContent());
+
+        return new PageImpl<>(planets);
     }
 
     @Override
@@ -75,7 +79,8 @@ public class PlanetRepositoryImpl implements PlanetRepository {
 
         final String resourceUrl = API_PATH_PLANETS + "/?page=" + page;
 
-        ResponseEntity<PlanetResponseApi> response = restTemplate.getForEntity(resourceUrl, PlanetResponseApi.class);
+        final ResponseEntity<PlanetResponseApi> response = restTemplate
+            .getForEntity(resourceUrl, PlanetResponseApi.class);
 
         return planetEntityAssembler.responseApiToCollectionModel(response.getBody().getResults());
     }

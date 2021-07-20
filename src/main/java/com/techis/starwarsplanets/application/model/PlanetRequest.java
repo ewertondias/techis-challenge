@@ -1,4 +1,4 @@
-package com.techis.starwarsplanets.domain.model.request;
+package com.techis.starwarsplanets.application.model;
 
 import lombok.Builder;
 import lombok.Getter;

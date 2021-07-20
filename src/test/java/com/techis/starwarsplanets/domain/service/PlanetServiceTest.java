@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.Collections;
 import java.util.List;
@@ -73,12 +75,14 @@ class PlanetServiceTest {
                 .build()
         );
 
-        when(planetRepositoryMock.listDatabase()).thenReturn(planetsMock);
+        final Page<Planet> pagePlanetsMock = new PageImpl<>(planetsMock);
 
-        final List<Planet> planets = planetService.listDatabase();
+        when(planetRepositoryMock.listDatabase(any())).thenReturn(pagePlanetsMock);
+
+        final Page<Planet> planets = planetService.listDatabase(null);
 
         assertFalse(planets.isEmpty());
-        assertThat(planets.size(), Matchers.greaterThanOrEqualTo(1));
+        assertThat(planets.getContent().size(), Matchers.greaterThanOrEqualTo(1));
     }
 
     @Test

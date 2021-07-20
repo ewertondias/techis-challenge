@@ -5,6 +5,7 @@ import com.techis.starwarsplanets.domain.exception.PlanetAlreadyExistsException;
 import com.techis.starwarsplanets.domain.exception.PlanetNotFoundExceptionException;
 import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.repository.PlanetRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.validation.ConstraintViolation;
@@ -48,8 +49,8 @@ public class PlanetServiceImpl implements PlanetService {
     }
 
     @Override
-    public List<Planet> listDatabase() {
-        return planetRepository.listDatabase();
+    public Page<Planet> listDatabase(final Pageable pageable) {
+        return planetRepository.listDatabase(pageable);
     }
 
     @Override
