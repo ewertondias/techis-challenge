@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -40,12 +39,14 @@ class PlanetServiceTest {
     @Test
     void deveCadastrarUmPlaneta() {
         final Planet planetRequest = Planet.builder()
-            .name("Dagobah")
-            .climate("Murky")
-            .terrain("Swamp")
+            .name("Alderaan")
+            .climate("Temperate")
+            .terrain("Grasslands")
             .build();
 
         when(planetRepositoryMock.insert(Mockito.any())).thenReturn(planetRequest);
+        when(planetRepositoryMock.findByName(anyString())).thenReturn(Optional.empty());
+
         final Planet planet = planetService.insert(planetRequest);
 
         Assertions.assertNotNull(planet);

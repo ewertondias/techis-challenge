@@ -85,9 +85,7 @@ public class PlanetRepositoryImpl implements PlanetRepository {
         final var planetEntities = planetMongoRepository.findByName(name);
 
         if (planetEntities.isEmpty()) {
-            throw new PlanetNotFoundExceptionException(
-                String.format("O planeta com o nome %s não foi encontrado", name)
-            );
+            return Optional.empty();
         }
 
         final var planet = planetEntityAssembler.toModel(planetEntities.get(0));
@@ -112,4 +110,5 @@ public class PlanetRepositoryImpl implements PlanetRepository {
 
         return planetApi.getFilms().size();
     }
+
 }
