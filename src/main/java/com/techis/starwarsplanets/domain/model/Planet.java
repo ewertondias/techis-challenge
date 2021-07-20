@@ -1,6 +1,5 @@
 package com.techis.starwarsplanets.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +13,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Planet {
 
     private String id;

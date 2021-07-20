@@ -2,10 +2,13 @@ package com.techis.starwarsplanets.application.rest;
 
 import com.techis.starwarsplanets.application.assembler.PlanetAssembler;
 import com.techis.starwarsplanets.application.helper.ResourceUriHelper;
+import com.techis.starwarsplanets.application.model.PlanetModel;
 import com.techis.starwarsplanets.application.model.PlanetRequest;
+import com.techis.starwarsplanets.application.openapi.controller.PlanetControllerOpenApi;
 import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.service.PlanetService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/planets")
-public class PlanetController {
+public class PlanetController implements PlanetControllerOpenApi {
 
     private final PlanetService planetService;
     private final PlanetAssembler planetAssembler;
@@ -35,34 +38,44 @@ public class PlanetController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Planet insert(@RequestBody @Valid PlanetRequest planetRequest) {
+    public PlanetModel insert(@RequestBody @Valid PlanetRequest planetRequest) {
         var planet = planetAssembler.toModel(planetRequest);
 
         planet = planetService.insert(planet);
 
         ResourceUriHelper.addUriResponseHeader(planet.getId());
 
-        return planet;
+        return planetAssembler.toPlanetModel(planet);
     }
 
     @GetMapping("/database")
-    public Page<Planet> listDatabase(final Pageable pageable) {
-        return planetService.listDatabase(pageable);
+    public Page<PlanetModel> listDatabase(final Pageable pageable) {
+        final var pagePlanets = planetService.listDatabase(pageable);
+
+        final var planetsModel = planetAssembler.toPlanetModelCollection(pagePlanets.getContent());
+
+        return new PageImpl<>(planetsModel);
     }
 
     @GetMapping("/api")
-    public List<Planet> listApi(final Pageable pageable) {
-        return planetService.listApi(pageable);
+    public List<PlanetModel> listApi(final Pageable pageable) {
+        final var planets = planetService.listApi(pageable);
+
+        return planetAssembler.toPlanetModelCollection(planets);
     }
 
     @GetMapping
-    public Planet findByName(@RequestParam final String name) {
-        return planetService.findByName(name);
+    public PlanetModel findByName(@RequestParam final String name) {
+        final var planet = planetService.findByName(name);
+
+        return planetAssembler.toPlanetModel(planet);
     }
 
     @GetMapping("/{id}")
-    public Planet findById(@PathVariable final String id) {
-        return planetService.findById(id);
+    public PlanetModel findById(@PathVariable final String id) {
+        final var planet = planetService.findById(id);
+
+        return planetAssembler.toPlanetModel(planet);
     }
 
     @DeleteMapping("/{id}")
