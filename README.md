@@ -61,6 +61,3 @@ mvn verify
 ## Documentação
 
 http://localhost:8080/swagger-ui.html
-
-## Discoverability HATEOAS
-http://localhost:8080/

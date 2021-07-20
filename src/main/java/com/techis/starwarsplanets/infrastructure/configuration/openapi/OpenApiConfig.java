@@ -1,10 +1,13 @@
 package com.techis.starwarsplanets.infrastructure.configuration.openapi;
 
 import com.techis.starwarsplanets.application.model.PlanetModel;
+import com.techis.starwarsplanets.application.openapi.model.PageableModelOpenApi;
 import com.techis.starwarsplanets.domain.model.Planet;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -25,7 +28,9 @@ public class OpenApiConfig {
                 .build()
             .apiInfo(apiInfo())
             .directModelSubstitute(Planet.class, PlanetModel.class)
+            .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
             .useDefaultResponseMessages(false)
+            .ignoredParameterTypes(Sort.class, Page.class)
             .tags(new Tag("Planetas", "Gerencia os planetas"));
     }
 

@@ -3,7 +3,6 @@ package com.techis.starwarsplanets.application.openapi.controller;
 import com.techis.starwarsplanets.application.exceptionhandler.ProblemDetails;
 import com.techis.starwarsplanets.application.model.PlanetModel;
 import com.techis.starwarsplanets.application.model.PlanetRequest;
-import com.techis.starwarsplanets.domain.model.Planet;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

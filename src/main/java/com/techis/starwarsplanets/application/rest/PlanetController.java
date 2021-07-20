@@ -5,7 +5,6 @@ import com.techis.starwarsplanets.application.helper.ResourceUriHelper;
 import com.techis.starwarsplanets.application.model.PlanetModel;
 import com.techis.starwarsplanets.application.model.PlanetRequest;
 import com.techis.starwarsplanets.application.openapi.controller.PlanetControllerOpenApi;
-import com.techis.starwarsplanets.domain.model.Planet;
 import com.techis.starwarsplanets.domain.service.PlanetService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
