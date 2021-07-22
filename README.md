@@ -21,7 +21,7 @@ usuário: techis
 
 senha: techis
 
-### Banco de dados teste
+### Banco de dados teste (Para testes integrados)
 MongoDB
 
 database: starwars-planets-test

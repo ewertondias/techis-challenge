@@ -28,7 +28,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException ex, WebRequest request) {
-
         final var problemDetails = createProblemDetails(
             HttpStatus.BAD_REQUEST,
             ProblemDetailsType.BUSINESS_ERROR,
